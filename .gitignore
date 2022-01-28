@@ -9,6 +9,12 @@ node_modules/
 target/
 dist/
 package-lock.json
+.scp/
+.env
+Makefile*.mta
+resources/
+archive.zip
+
 
 # Web IDE, App Studio
 .che/
