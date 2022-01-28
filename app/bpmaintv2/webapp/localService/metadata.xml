@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="service.bpProvider.BPService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="BusinessPartner" EntityType="service.bpProvider.BPService.BusinessPartner" sap:label="Business Partner"/>
+                <EntitySet Name="BusinessPartnerAddress" EntityType="service.bpProvider.BPService.BusinessPartnerAddress" sap:label="Address"/>
+                <AssociationSet Name="BusinessPartner_to_BusinessPartnerAddress" Association="service.bpProvider.BPService.BusinessPartner_to_BusinessPartnerAddress">
+                    <End Role="BusinessPartner" EntitySet="BusinessPartner"/>
+                    <End Role="BusinessPartnerAddress" EntitySet="BusinessPartnerAddress"/>
+                </AssociationSet>
+            </EntityContainer>
+            <EntityType Name="BusinessPartner" sap:label="Business Partner" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="businessPartnerId"/>
+                </Key>
+                <Property Name="businessPartnerId" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Business Partner" sap:quickinfo="Business Partner Number"/>
+                <Property Name="businessPartnerName" Type="Edm.String" MaxLength="81" sap:creatable="false" sap:updatable="false"/>
+                <NavigationProperty Name="to_BusinessPartnerAddress" Relationship="service.bpProvider.BPService.BusinessPartner_to_BusinessPartnerAddress" FromRole="BusinessPartner" ToRole="BusinessPartnerAddress"/>
+            </EntityType>
+            <EntityType Name="BusinessPartnerAddress" sap:label="Address" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="businessPartnerId"/>
+                    <PropertyRef Name="addressId"/>
+                </Key>
+                <Property Name="businessPartnerId" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Business Partner" sap:quickinfo="Business Partner Number"/>
+                <Property Name="addressId" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Address Number"/>
+                <Property Name="country" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Country/Region Key"/>
+                <Property Name="cityName" Type="Edm.String" MaxLength="40" sap:label="City"/>
+                <Property Name="streetName" Type="Edm.String" MaxLength="60" sap:label="Street"/>
+                <Property Name="houseNumber" Type="Edm.String" MaxLength="10" sap:label="House Number"/>
+                <Property Name="postalCode" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Postal Code" sap:quickinfo="City postal code"/>
+                <Property Name="corrLanguage" Type="Edm.String" MaxLength="2" sap:label="Language Key"/>
+                <Property Name="validFrom" Type="Edm.DateTimeOffset" sap:label="Valid From" sap:quickinfo="Validity Start of a Business Partner Address"/>
+                <Property Name="validTo" Type="Edm.DateTimeOffset" sap:label="Valid To" sap:quickinfo="Validity End of a Business Partner Address"/>
+            </EntityType>
+            <Association Name="BusinessPartner_to_BusinessPartnerAddress">
+                <End Role="BusinessPartner" Type="service.bpProvider.BPService.BusinessPartner" Multiplicity="*"/>
+                <End Role="BusinessPartnerAddress" Type="service.bpProvider.BPService.BusinessPartnerAddress" Multiplicity="*"/>
+            </Association>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartner" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="businessPartnerId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="businessPartnerName"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Business Partner"/>
+                        <PropertyValue Property="TypeNamePlural" String="Business Partners"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="businessPartnerName"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="businessPartnerId"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Adresses"/>
+                            <PropertyValue Property="Target" AnnotationPath="to_BusinessPartnerAddress/@UI.LineItem"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.EntityContainer/BusinessPartner" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartner/businessPartnerId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Number"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartner/businessPartnerName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="businessPartnerId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="addressId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="postalCode"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="cityName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="streetName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="houseNumber"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="country"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="corrLanguage"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="validFrom"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="validTo"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Business Partner Address"/>
+                        <PropertyValue Property="TypeNamePlural" String="Business Partner Addresses"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="cityName"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="businessPartnerId"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="postalCode"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="cityName"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="streetName"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="houseNumber"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="country"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="corrLanguage"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="validFrom"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="validTo"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Address Information"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.EntityContainer/BusinessPartnerAddress" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.ReadRestrictions">
+                    <Record Type="Capabilities.ReadRestrictionsType">
+                        <PropertyValue Property="Readable" Bool="true"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/businessPartnerId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="BP Number"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/addressId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Addr Number"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/country" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Country"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/cityName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="City"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/streetName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Street"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/houseNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="House Number"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/postalCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="ZIP"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/corrLanguage" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Language"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/validFrom" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Valid From"/>
+            </Annotations>
+            <Annotations Target="service.bpProvider.BPService.BusinessPartnerAddress/validTo" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Valid To"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

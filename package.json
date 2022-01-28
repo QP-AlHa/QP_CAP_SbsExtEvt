@@ -1,0 +1,70 @@
+{
+    "name": "sbsextevt",
+    "version": "1.0.0",
+    "description": "S/4HANA Side by side extension by CAP app on BTP using Event Mesh",
+    "repository": "https://github.com/QP-AlHa/QP_CAP_SbsExtEvt.git",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/cds": "^5",
+        "@sap/cds-odata-v2-adapter-proxy": "^1.8.4",
+        "express": "^4",
+        "passport": "^0.5.0"
+    },
+    "devDependencies": {
+        "@sap/ux-specification": "^1.96.0",
+        "sqlite3": "^5.0.2"
+    },
+    "scripts": {
+        "start": "cds run",
+        "undeploy": "cf undeploy SbsExtEvt --delete-services --delete-service-keys"
+    },
+    "eslintConfig": {
+        "extends": "eslint:recommended",
+        "env": {
+            "es2020": true,
+            "node": true,
+            "jest": true,
+            "mocha": true
+        },
+        "globals": {
+            "SELECT": true,
+            "INSERT": true,
+            "UPDATE": true,
+            "DELETE": true,
+            "CREATE": true,
+            "DROP": true,
+            "CDL": true,
+            "CQL": true,
+            "CXL": true,
+            "cds": true
+        },
+        "rules": {
+            "no-console": "off",
+            "require-atomic-updates": "off"
+        }
+    },
+    "cds": {
+        "requires": {
+            "[production]": {
+                "uaa": {
+                    "kind": "xsuaa"
+                }
+            },
+            "OP_API_BUSINESS_PARTNER_SRV": {
+                "kind": "odata-v2",
+                "model": "srv/external/OP_API_BUSINESS_PARTNER_SRV",
+                "[production]": {
+                    "credentials": {
+                        "destination": "bp-s4",
+                        "requestTimeout": 18000000
+                    }
+                }
+            }
+        }
+    },
+    "sapux": [
+        "app/bpmaint",
+        "app/bpmaint"
+    ]
+}
