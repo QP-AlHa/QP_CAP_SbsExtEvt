@@ -8,7 +8,7 @@
 |**Floorplan Used**<br>List Report Object Page V4|
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>/bp/
-|**Module Name**<br>bpmaint|
+|**Module Name**<br>bpmaintevt|
 |**Application Title**<br>Business Partner Maintenance|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_fiori_3|
@@ -19,7 +19,7 @@
 |**Main Entity**<br>BusinessPartner|
 |**Navigation Entity**<br>to_BusinessPartnerAddress|
 
-## bpmaint
+## bpmaintevt
 
 Business Partner Maintenance
 
@@ -27,7 +27,7 @@ Business Partner Maintenance
 
 -   This app has been generated using the SAP Fiori tools - App Generator, as part of the SAP Fiori tools suite.  In order to launch the generated app, simply start your CAP project and navigate to the following location in your browser:
 
-http://localhost:4004/bpmaint/webapp/index.html
+http://localhost:4004/bpmaintevt/webapp/index.html
 
 #### Pre-requisites:
 

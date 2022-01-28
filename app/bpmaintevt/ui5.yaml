@@ -1,6 +1,6 @@
 specVersion: '2.4'
 metadata:
-  name: 'bpmaintv2'
+  name: 'bpmaintevt'
 type: application
 server:
   customMiddleware:
@@ -9,7 +9,7 @@ server:
     configuration:
       ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
       backend:
-      - path: /v2
+      - path: /bp
         url: http://localhost:4004
       ui5:
         path: 
@@ -23,7 +23,3 @@ server:
      port: 35729
      path: webapp
      delay: 300
-  - name: fiori-tools-preview
-    afterMiddleware: fiori-tools-appreload
-    configuration:
-      component: bpmaintv2

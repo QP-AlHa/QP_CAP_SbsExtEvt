@@ -1,7 +1,7 @@
 {
     "_version": "1.32.0",
     "sap.app": {
-        "id": "bpmaintv2",
+        "id": "bpmaintevtv2",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {

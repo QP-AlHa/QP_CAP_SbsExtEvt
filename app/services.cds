@@ -1,3 +1,3 @@
 
-using from './bpmaint/annotations';
-using from './bpmaintv2/annotations';
+using from './bpmaintevt/annotations';
+using from './bpmaintevtv2/annotations';

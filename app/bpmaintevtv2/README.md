@@ -8,7 +8,7 @@
 |**Floorplan Used**<br>List Report Object Page V2|
 |**Service Type**<br>OData Url|
 |**Service URL**<br>http://localhost:4004/v2/bp/
-|**Module Name**<br>bpmaintv2|
+|**Module Name**<br>bpmaintevtv2|
 |**Application Title**<br>Business Partner Maintenance V2|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_fiori_3|
@@ -19,7 +19,7 @@
 |**Main Entity**<br>BusinessPartner|
 |**Navigation Entity**<br>to_BusinessPartnerAddress|
 
-## bpmaintv2
+## bpmaintevtv2
 
 Business Partner Maintenance V2
 
