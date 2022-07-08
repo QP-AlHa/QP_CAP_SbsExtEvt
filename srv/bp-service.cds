@@ -1,8 +1,14 @@
+using my.bpProvider as my from '../db/schema';
 using OP_API_BUSINESS_PARTNER_SRV as BUPA_API from './external/OP_API_BUSINESS_PARTNER_SRV';
 namespace service.bpProvider;
  
  
 service BPService  {
+  @requires: 'authenticated-user'
+  @odata.draft.enabled
+  entity Notifications as projection on my.Notifications;
+  entity Addresses as projection on my.Addresses;
+
   @requires: 'authenticated-user'
   @readonly entity BusinessPartner as projection on BUPA_API.A_BusinessPartner {
      key BusinessPartner as businessPartnerId,
@@ -11,13 +17,7 @@ service BPService  {
   };
 
   @requires: 'authenticated-user'
-  @Capabilities: {
-    InsertRestrictions.Insertable: false,
-    UpdateRestrictions.Updatable: true,
-    DeleteRestrictions.Deletable: false,
-    ReadRestrictions.Readable: true
-  }
-  entity BusinessPartnerAddress as projection on BUPA_API.A_BusinessPartnerAddress {
+  @readonly entity BusinessPartnerAddress as projection on BUPA_API.A_BusinessPartnerAddress {
      key BusinessPartner as businessPartnerId,
      key AddressID as addressId,
       Country as country,

@@ -10,12 +10,23 @@ modules:
   requires:
   - name: SbsExtEvt-dest
   - name: SbsExtEvt-xsuaa
+  - name: SbsExtEvt-hdi
+  - name: SbsExtEvt-ems
   provides:
   - name: srv-api
     properties:
       srv-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
+
+- name: SbsExtEvt-db
+  type: hdb
+  path: gen/db
+  requires:
+  - name: SbsExtEvt-hdi
+  parameters:
+    app-name: SbsExtEvt-db
+    memory: 128MB
 
 - name: SbsExtEvt-app
   type: approuter.nodejs
@@ -81,6 +92,21 @@ modules:
     supported-platforms: []
 
 resources:
+- name: SbsExtEvt-hdi
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hanatrial
+    service-plan: securestore
+  properties:
+    hdi-service-name: ${service-name}
+
+- name: SbsExtEvt-ems
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./em.json
+    service: enterprise-messaging
+    service-plan: dev
+
 - name: SbsExtEvt-xsuaa
   type: org.cloudfoundry.managed-service
   parameters:

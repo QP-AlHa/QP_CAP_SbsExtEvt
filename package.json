@@ -45,10 +45,31 @@
         }
     },
     "cds": {
+        "hana": {
+            "deploy-format": "hdbtable"
+        },
         "requires": {
+            "messaging": {
+                "kind": "local-messaging",
+                "[production]": {
+                    "kind": "enterprise-messaging-shared",
+                    "queue": {
+                        "name": "refapps/bpems/abc/BusinessPartnerValidation-srv/1234"
+                    },
+                    "publishPrefix": "$namespace/",
+                    "subscribePrefix": "$namespace/"
+                }
+            },
             "[production]": {
                 "uaa": {
                     "kind": "xsuaa"
+                },
+                "db": {
+                    "kind": "hana",
+                    "model": [
+                        "db",
+                        "srv"
+                    ]
                 }
             },
             "OP_API_BUSINESS_PARTNER_SRV": {
