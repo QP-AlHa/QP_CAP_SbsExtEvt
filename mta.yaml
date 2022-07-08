@@ -95,8 +95,8 @@ resources:
 - name: SbsExtEvt-hdi
   type: com.sap.xs.hdi-container
   parameters:
-    service: hanatrial
-    service-plan: securestore
+    service: hana
+    service-plan: hdi-shared
   properties:
     hdi-service-name: ${service-name}
 
