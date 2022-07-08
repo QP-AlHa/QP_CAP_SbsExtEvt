@@ -7,6 +7,9 @@ service BPService  {
   @requires: 'authenticated-user'
   @odata.draft.enabled
   entity Notifications as projection on my.Notifications;
+
+  @requires: 'authenticated-user'
+  @odata.draft.enabled
   entity Addresses as projection on my.Addresses;
 
   @requires: 'authenticated-user'
